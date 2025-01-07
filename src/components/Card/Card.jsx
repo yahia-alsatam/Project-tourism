@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../Card/Card.css";
 
-const Card = ({ data }) => {
+const Card = ({ data, deleteData, length, Refresh }) => {
   const [isExpanded, setExpanded] = useState({});
   const [isActive, setActive] = useState(true);
 
@@ -11,7 +11,11 @@ const Card = ({ data }) => {
       [id]: !prevStates[id],
     }));
   };
-
+  useEffect(() => {
+    {
+      length !== 0 ? setActive(true) : setActive(false);
+    }
+  }, [length]);
   return (
     <>
       <div className="container-css flex items-center justify-center flex-col mt-9 w-screen">
@@ -22,6 +26,10 @@ const Card = ({ data }) => {
           <span className="w-[150px] h-[6px] bg-teal-400 mt-3"></span>
         ) : (
           <button
+            onClick={() => {
+              setExpanded({});
+              Refresh();
+            }}
             type="button"
             class="text-white mt-4 bg-teal-500 hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800"
           >
@@ -62,10 +70,11 @@ const Card = ({ data }) => {
               </div>
               <div className="flex justify-center p-6 pt-2 gap-7">
                 <button
-                  className="min-w-full  rounded-md bg-white py-2 px-4 border border-teal-500 border-transparent text-center text-sm text-teal-700 transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-teal-500 hover:text-white active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  onClick={() => deleteData(d)}
+                  className="min-w-full  rounded-md bg-white py-2 px-4 border border-teal-500 border-transparent text-center text-sm text-teal-700 transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-teal-500 hover:text-white duration-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                 >
-                  Not Intereced
+                  Not Interacted
                 </button>
               </div>
             </div>
