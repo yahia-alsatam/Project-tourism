@@ -1,36 +1,45 @@
+// Calling useEffect, useState, Axios library, and Card component
+
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import Card from "./Card/Card";
 
 const GetApi = () => {
+  // Definition of useState to store tourism data
   const [tourism, setTourism] = useState([]);
+  // Definition of useState to store original tourism data
   const [orginaltour, setOrginaltour] = useState([]);
+  // Definition of useState for loading state
   const [isLoading, setLoading] = useState(false);
-  const [isExpanded, setExpanded] = useState({});
-
+  // Store the error in case the data is not fetched via useState
   const [Error, setError] = useState("");
 
   useEffect(() => {
+    // Fetching data
     const fetchData = async () => {
       setLoading(true);
       try {
         await axios
           .get("https://www.course-api.com/react-tours-project")
           .then((ref) => {
+            // Storing data
             setTourism(ref.data);
+            // Storing the original data that is not modified
             setOrginaltour(ref.data);
           });
         setLoading(false);
       } catch (error) {
+        // Storing the error
         setError(error.message);
         console.log(error.message);
         setLoading(false);
       }
     };
+    // Executing the data fetching function
     fetchData();
   }, []);
-
+  // Deleting data
   const DeleteData = async (tour) => {
     setTourism(tourism.filter((t) => t.id !== tour.id));
     try {
@@ -42,12 +51,14 @@ const GetApi = () => {
       console.log(error.message);
     }
   };
+  // When refreshing, the original data returns.
+
   const refresh = () => {
     setTourism([...orginaltour]);
-    setExpanded({});
   };
   return (
     <>
+      {/* If the data has not loaded yet, a loading spinner icon is displayed.  */}
       {isLoading ? (
         <div className="flex justify-center items-center mt-20" role="status ">
           <svg
@@ -69,10 +80,19 @@ const GetApi = () => {
           <span className="sr-only">Loading...</span>
         </div>
       ) : (
+        // And once the data is loaded, it calls the Card component and passes the data to it.
+
         <Card
+          // Passing data
           data={tourism}
+          // Passing the delete function to be executed by a button.
+
           deleteData={DeleteData}
+          // Passing the length of the data array to check if it is empty.
+
           length={tourism.length}
+          // Passing the refresh function to be executed by a button.
+
           Refresh={refresh}
         />
       )}
