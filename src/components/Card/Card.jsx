@@ -49,55 +49,57 @@ const Card = ({ data, deleteData, length, Refresh }) => {
         )}
 
         {/* The main card container (div) */}
-        <div className="container-card  flex flex-wrap max-w-[1200px] gap-5 max-[1200px]:justify-center">
-          {data.map((d) => (
-            <div
-              key={d.id}
-              className="flex flex-col bg-white shadow border border-slate-200 rounded-lg my-6 w-96 "
-            >
-              <div className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center relative ">
-                <img
-                  className="w-full h-full object-cover"
-                  src={d.image}
-                  alt="profile-picture"
-                />
-                <span className="absolute top-0 right-0 bg-teal-500 text-white p-2">
-                  ${d.price}
-                </span>
-              </div>
-              <div className="p-6 text-center">
-                <h4 className="mb-1 text-xl font-semibold text-slate-800">
-                  {d.name}
-                </h4>
+        <div className="flex justify-center  w-fit">
+          <div className="container-card  flex flex-wrap max-w-screen-xl justify-center gap-5 max-[1200px]:justify-center">
+            {data.map((d) => (
+              <div
+                key={d.id}
+                className="flex flex-col bg-white shadow border border-slate-200 rounded-lg my-6 w-72 "
+              >
+                <div className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center relative ">
+                  <img
+                    className="w-full h-full object-cover"
+                    src={d.image}
+                    alt="profile-picture"
+                  />
+                  <span className="absolute top-0 right-0 bg-teal-500 text-white p-2">
+                    ${d.price}
+                  </span>
+                </div>
+                <div className="p-6 text-center">
+                  <h4 className="mb-1 text-xl font-semibold text-slate-800">
+                    {d.name}
+                  </h4>
 
-                {/* Toggling the item state to display the full text or the
+                  {/* Toggling the item state to display the full text or the
                 opposite. */}
-                <span className="text-base text-slate-600 mt-4 font-light ">
-                  {isExpanded[d.id] ? d.info : `${d.info.substring(0, 200)}`}
-                </span>
+                  <span className="text-base text-slate-600 mt-4 font-light ">
+                    {isExpanded[d.id] ? d.info : `${d.info.substring(0, 200)}`}
+                  </span>
 
-                {/* Changing the item's state on click. */}
-                <button
-                  onClick={() => handleExpanded(d.id)}
-                  className="text-green-500"
-                >
-                  {/* If true, the full text will be displayed; otherwise, "Show more" will appear.
-                   */}
-                  {isExpanded[d.id] ? " Show Less" : "... Read More"}
-                </button>
+                  {/* Changing the item's state on click. */}
+                  <button
+                    onClick={() => handleExpanded(d.id)}
+                    className="text-green-500"
+                  >
+                    {/* If true, the full text will be displayed; otherwise, "Show more" will appear.
+                     */}
+                    {isExpanded[d.id] ? " Show Less" : "... Read More"}
+                  </button>
+                </div>
+                <div className="flex justify-center p-6 pt-2 gap-7">
+                  <button
+                    // Executing the delete function.
+                    onClick={() => deleteData(d)}
+                    className="min-w-full  rounded-md bg-white py-2 px-4 border border-teal-500 border-transparent text-center text-sm text-teal-700 transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-teal-500 hover:text-white duration-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button"
+                  >
+                    Not Interacted
+                  </button>
+                </div>
               </div>
-              <div className="flex justify-center p-6 pt-2 gap-7">
-                <button
-                  // Executing the delete function.
-                  onClick={() => deleteData(d)}
-                  className="min-w-full  rounded-md bg-white py-2 px-4 border border-teal-500 border-transparent text-center text-sm text-teal-700 transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-teal-500 hover:text-white duration-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                  type="button"
-                >
-                  Not Interacted
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </>
